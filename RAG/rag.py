@@ -99,3 +99,19 @@ print("Vector store created with following details:")
 print(f"- Number of texts: {len(chunks)}")
 print(f"- Embedding dimension: {len(embeddings.embed_query('test'))}")
 print(f"- Database location: ./chroma_db")
+
+
+
+# Step 5: Similarity Search Example
+print("\nStep 5: Testing similarity search")
+print("-" * 50)
+
+query = "What is reinforcement learning?"
+results = vectorstore.similarity_search(query, k=2)
+
+print(f"Query: {query}")
+print("\nTop 2 most relevant chunks:")
+for i, doc in enumerate(results):
+    print(f"\nResult {i+1}:")
+    print(doc.page_content)
+    print("-" * 30)
