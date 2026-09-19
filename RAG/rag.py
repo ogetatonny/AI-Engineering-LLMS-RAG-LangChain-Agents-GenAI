@@ -84,6 +84,9 @@ print("This model will convert text chunks into numerical vectors")
 # OpenAI embeddings:
 # embeddings = OpenAIEmbeddings()
 
+
+
+
 # Step 4: Create and populate vector store
 print("\nStep 4: Creating vector store")
 print("-" * 50)
@@ -115,3 +118,60 @@ for i, doc in enumerate(results):
     print(f"\nResult {i+1}:")
     print(doc.page_content)
     print("-" * 30)
+
+
+
+
+# Step 6: Set up RAG with Anthropic Claude
+print("\nStep 6: Setting up RAG pipeline")
+print("-" * 50)
+
+print("Using Anthropic Claude model with the provided API key")
+
+# Initialize the LLM with Anthropic Claude
+llm = ChatAnthropic(
+    model="claude-3-5-sonnet-20240620",
+    temperature=0.5
+)
+
+# OpenAI:
+# if "OPENAI_API_KEY" in os.environ:
+#     llm = OpenAI(
+#         model_name="gpt-4",
+#         temperature=0.5
+#     )
+
+# HuggingFace:
+# if "HUGGINGFACEHUB_API_TOKEN" in os.environ:
+#     llm = HuggingFaceHub(
+#         repo_id="google/flan-t5-small",
+#         model_kwargs={"temperature": 0.5, "max_length": 512}
+#     )
+
+# Create the RAG pipeline
+qa_chain = RetrievalQA.from_chain_type(
+    llm=llm,
+    chain_type="stuff",
+    retriever=vectorstore.as_retriever()
+)
+
+# Example questions to ask
+questions = [
+    "What is reinforcement learning and how does it work?",
+    "What are the main applications of computer vision?",
+    "How is NLP used in real-world applications?"
+]
+
+print("\nAsking questions to our RAG system:")
+
+for question in questions:
+    print("\nQuestion:", question)
+    try:
+        answer = qa_chain.invoke(question)
+        print("Answer:", answer)
+    except Exception as e:
+        print("Error getting answer:", str(e))
+
+
+
+
