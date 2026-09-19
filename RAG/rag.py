@@ -66,3 +66,36 @@ for i, chunk in enumerate(chunks):
     print(f"\nChunk {i+1}:")
     print(chunk)
     print("-" * 30)
+
+
+
+
+# Step 3: Initialize Embeddings
+print("\nStep 3: Creating embeddings")
+print("-" * 50)
+
+embeddings = HuggingFaceEmbeddings(
+    model_name="sentence-transformers/all-MiniLM-L6-v2"
+)
+
+print("Embedding model loaded:", embeddings.model_name)
+print("This model will convert text chunks into numerical vectors")
+
+# OpenAI embeddings:
+# embeddings = OpenAIEmbeddings()
+
+# Step 4: Create and populate vector store
+print("\nStep 4: Creating vector store")
+print("-" * 50)
+
+# Create vector store
+vectorstore = Chroma.from_texts(
+    texts=chunks,
+    embedding=embeddings,
+    persist_directory="./chroma_db"
+)
+
+print("Vector store created with following details:")
+print(f"- Number of texts: {len(chunks)}")
+print(f"- Embedding dimension: {len(embeddings.embed_query('test'))}")
+print(f"- Database location: ./chroma_db")
