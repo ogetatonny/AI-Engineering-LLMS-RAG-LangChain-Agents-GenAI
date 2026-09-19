@@ -45,3 +45,24 @@ This is used in game playing, robotics, and autonomous systems.
 print("Document loaded. Length:", len(document), "characters")
 print("\nPreview of the document:")
 print(document[:200], "...\n")
+
+
+# Step 2: Text Chunking
+print("\nStep 2: Chunking the document")
+print("-" * 50)
+
+text_splitter = RecursiveCharacterTextSplitter(
+    chunk_size=200,
+    chunk_overlap=50,
+    length_function=len,
+    separators=["\n\n", "\n", ". ", " "]
+)
+
+chunks = text_splitter.split_text(document)
+
+print(f"Document has been split into {len(chunks)} chunks.")
+print("\nExample chunks:")
+for i, chunk in enumerate(chunks):
+    print(f"\nChunk {i+1}:")
+    print(chunk)
+    print("-" * 30)
