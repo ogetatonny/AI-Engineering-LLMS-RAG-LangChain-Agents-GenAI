@@ -52,7 +52,7 @@ vectorstore = Chroma.from_documents(documents=splits, embedding=embeddings)
 # create retriever
 retriever = vectorstore.as_retriever()
 
-# Create a RAG template
+# Create a rag template
 template = """Answer the following question based on the provided context:
             Context: {context}
             Question: {question}
@@ -60,10 +60,10 @@ template = """Answer the following question based on the provided context:
 
             Answer:"""
 
-# Create a RAG prompt
+# Create a rag prompt
 prompt = ChatPromptTemplate.from_template(template)
 
-# Create RAG chain
+# Create rag chain
 rag_chain = (
     {"context": retriever, "question": RunnablePassthrough()}
     | prompt

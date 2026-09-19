@@ -122,8 +122,8 @@ for i, doc in enumerate(results):
 
 
 
-# Step 6: Set up RAG with Anthropic Claude
-print("\nStep 6: Setting up RAG pipeline")
+# Step 6: Set up rag with Anthropic Claude
+print("\nStep 6: Setting up rag pipeline")
 print("-" * 50)
 
 print("Using Anthropic Claude model with the provided API key")
@@ -148,7 +148,7 @@ llm = ChatAnthropic(
 #         model_kwargs={"temperature": 0.5, "max_length": 512}
 #     )
 
-# Create the RAG pipeline
+# Create the rag pipeline
 qa_chain = RetrievalQA.from_chain_type(
     llm=llm,
     chain_type="stuff",
@@ -162,7 +162,7 @@ questions = [
     "How is NLP used in real-world applications?"
 ]
 
-print("\nAsking questions to our RAG system:")
+print("\nAsking questions to our rag system:")
 
 for question in questions:
     print("\nQuestion:", question)
